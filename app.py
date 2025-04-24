@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # === Load scaler and model ===
 scaler = joblib.load("lstm_scaler.pkl")
-model = load_model("final_flare_model.keras")
+model = load_model("flare_prediction_model.keras")
 
 # === Config ===
 features_count = 33
@@ -33,6 +33,7 @@ def predict():
             window = X_scaled[i:i+sequence_length]
             sequences.append(window)
         X_seq = np.array(sequences)  # shape: (num_sequences, 24, 33)
+
 
         # === Model Prediction ===
         flare_probs, _ = model.predict(X_seq)
