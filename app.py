@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS 
 import numpy as np
 import pandas as pd
 import joblib
 from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:5173"])
 
 # === Load scaler and model ===
 scaler = joblib.load("lstm_scaler.pkl")
