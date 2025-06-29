@@ -1,23 +1,18 @@
-# Base image with Python 3.10
-FROM python:3.10-slim
+# Use full Python 3.10 image (NOT slim)
+FROM python:3.10
 
-# Set working directory
+# Set work directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y build-essential
-
-# Copy all project files
+# Copy everything
 COPY . .
 
-# Install Python packages
+# Upgrade pip and install all packages
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Use Render's PORT environment variable
+# Use environment port
 ENV PORT=8000
-
-# Expose port (for Docker, optional for Render)
 EXPOSE $PORT
 
-# Run the app using gunicorn and dynamic port
+# Run app using gunicorn
 CMD ["sh", "-c", "gunicorn app:app --bind 0.0.0.0:$PORT"]
